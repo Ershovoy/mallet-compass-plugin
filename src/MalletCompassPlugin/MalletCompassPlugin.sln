@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MalletCompassPlugin", "MalletCompassPlugin\MalletCompassPlugin.csproj", "{447B9467-D6B2-4EFA-9C15-26BEB5ED04C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{52607505-8BCA-45D8-A2D9-6E6AD55E3FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{0A1F9FF8-4B47-4423-903C-30FAE87487CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompassWrapper", "CompassWrapper\CompassWrapper.csproj", "{FE9355B4-8122-423A-93F9-AB6F57EBC117}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{447B9467-D6B2-4EFA-9C15-26BEB5ED04C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{447B9467-D6B2-4EFA-9C15-26BEB5ED04C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{447B9467-D6B2-4EFA-9C15-26BEB5ED04C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{447B9467-D6B2-4EFA-9C15-26BEB5ED04C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52607505-8BCA-45D8-A2D9-6E6AD55E3FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52607505-8BCA-45D8-A2D9-6E6AD55E3FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52607505-8BCA-45D8-A2D9-6E6AD55E3FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52607505-8BCA-45D8-A2D9-6E6AD55E3FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A1F9FF8-4B47-4423-903C-30FAE87487CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A1F9FF8-4B47-4423-903C-30FAE87487CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A1F9FF8-4B47-4423-903C-30FAE87487CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A1F9FF8-4B47-4423-903C-30FAE87487CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9355B4-8122-423A-93F9-AB6F57EBC117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9355B4-8122-423A-93F9-AB6F57EBC117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9355B4-8122-423A-93F9-AB6F57EBC117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9355B4-8122-423A-93F9-AB6F57EBC117}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DFB9CF9-E0D1-444E-928F-6C306FEAEDEE}
+	EndGlobalSection
+EndGlobal
