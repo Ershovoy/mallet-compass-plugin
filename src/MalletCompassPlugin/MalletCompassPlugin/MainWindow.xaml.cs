@@ -20,6 +20,9 @@ namespace MalletCompassPlugin
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
