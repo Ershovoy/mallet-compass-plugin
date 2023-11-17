@@ -1,51 +1,57 @@
-﻿using System.Runtime.InteropServices;
-using System.Security;
-
-namespace CompassWrapper;
-
-/// <summary>
-/// Нужен для реализации метода <see cref="GetActiveObject(string)"/>, 
-/// который доступен только в .Net Framework.
-/// </summary>
-public static class MyMarshal
+﻿namespace CompassWrapper
 {
-    [SecurityCritical]
-    public static object GetActiveObject(string progID)
+    using System.Runtime.InteropServices;
+    using System.Security;
+
+    /// <summary>
+    /// Нужен для реализации метода <see cref="GetActiveObject(string)"/>,
+    /// который доступен только в .Net Framework.
+    /// </summary>
+    public static class MyMarshal
     {
-        object? ppunk = null;
-        Guid clsid;
-        try
+        /// <summary>
+        /// Получить обработчик программы по её айти.
+        /// </summary>
+        /// <param name="progID">Айди программы.</param>
+        /// <returns>Обработчик программы.</returns>
+        [SecurityCritical]
+        public static object GetActiveObject(string progID)
         {
-            CLSIDFromProgIDEx(progID, out clsid);
-        }
-        catch (Exception)
-        {
-            CLSIDFromProgID(progID, out clsid);
+            object? ppunk = null;
+            Guid clsid;
+            try
+            {
+                CLSIDFromProgIDEx(progID, out clsid);
+            }
+            catch (Exception)
+            {
+                CLSIDFromProgID(progID, out clsid);
+            }
+
+            GetActiveObject(ref clsid, IntPtr.Zero, out ppunk);
+            return ppunk;
         }
 
-        GetActiveObject(ref clsid, IntPtr.Zero, out ppunk);
-        return ppunk;
+        [DllImport("ole32.dll", PreserveSig = false)]
+        [SuppressUnmanagedCodeSecurity]
+        [SecurityCritical]
+        private static extern void CLSIDFromProgIDEx(
+            [MarshalAs(UnmanagedType.LPWStr)] string progId,
+            out Guid clsid);
+
+        [DllImport("ole32.dll", PreserveSig = false)]
+        [SuppressUnmanagedCodeSecurity]
+        [SecurityCritical]
+        private static extern void CLSIDFromProgID(
+            [MarshalAs(UnmanagedType.LPWStr)] string progId,
+            out Guid clsid);
+
+        [DllImport("oleaut32.dll", PreserveSig = false)]
+        [SuppressUnmanagedCodeSecurity]
+        [SecurityCritical]
+        private static extern void GetActiveObject(
+            ref Guid rclsid,
+            IntPtr reserved,
+            [MarshalAs(UnmanagedType.Interface)] out object ppunk);
     }
-
-    [DllImport("ole32.dll", PreserveSig = false)]
-    [SuppressUnmanagedCodeSecurity]
-    [SecurityCritical]
-    private static extern void CLSIDFromProgIDEx(
-        [MarshalAs(UnmanagedType.LPWStr)] string progId,
-        out Guid clsid);
-
-    [DllImport("ole32.dll", PreserveSig = false)]
-    [SuppressUnmanagedCodeSecurity]
-    [SecurityCritical]
-    private static extern void CLSIDFromProgID(
-        [MarshalAs(UnmanagedType.LPWStr)] string progId,
-        out Guid clsid);
-
-    [DllImport("oleaut32.dll", PreserveSig = false)]
-    [SuppressUnmanagedCodeSecurity]
-    [SecurityCritical]
-    private static extern void GetActiveObject(
-        ref Guid rclsid,
-        IntPtr reserved,
-        [MarshalAs(UnmanagedType.Interface)] out object ppunk);
 }
