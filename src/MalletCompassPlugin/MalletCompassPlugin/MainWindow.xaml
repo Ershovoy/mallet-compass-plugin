@@ -94,15 +94,25 @@
                 </TextBox>
                 <Label Grid.Row="4" Grid.Column="2">мм</Label>
 
-                <Button
-                    Grid.Row="6"
+                <StackPanel
+                    Grid.Row="5"
                     Grid.ColumnSpan="3"
-                    Height="32"
-                    Margin="4"
-                    VerticalAlignment="Bottom"
-                    Command="{Binding BuildCommand}">
-                    Построить
-                </Button>
+                    VerticalAlignment="Bottom">
+                    <Button
+                        Height="32"
+                        Margin="4"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding BuildOpenGLCommand}">
+                        Построить в OpenGL
+                    </Button>
+                    <Button
+                        Height="32"
+                        Margin="4"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding BuildCompassCommand}">
+                        Построить в КОМПАС-3D
+                    </Button>
+                </StackPanel>
             </Grid>
         </GroupBox>
 

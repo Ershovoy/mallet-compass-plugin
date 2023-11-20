@@ -1,6 +1,10 @@
-﻿namespace ViewModel
+namespace ViewModel
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics;
+    using System.IO;
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Input;
     using CompassWrapper;
@@ -16,7 +20,8 @@
         /// Ширина бойка.
         /// </summary>
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
         [NotifyDataErrorInfo]
         [Range(
             50.0,
@@ -32,7 +37,8 @@
         /// Высота бойка.
         /// </summary>
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
         [NotifyDataErrorInfo]
         [Range(
             50.0,
@@ -45,7 +51,8 @@
         /// Длина бойка.
         /// </summary>
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
         [NotifyDataErrorInfo]
         [Range(
             100.0,
@@ -61,7 +68,8 @@
         /// Высота рукоятки.
         /// </summary>
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
         [NotifyDataErrorInfo]
         [Range(
             100.0,
@@ -75,7 +83,8 @@
         /// Диаметр рукоятки.
         /// </summary>
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(BuildCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
         [NotifyDataErrorInfo]
         [Range(
             25.0,
@@ -172,17 +181,45 @@
         }
 
         /// <summary>
+        /// Команда для сохранения параметров киянки в файл.
+        /// </summary>
+        [RelayCommand(CanExecute = nameof(CanBuild))]
+        private void BuildOpenGL()
+        {
+            var processes = Process.GetProcessesByName("mallet_by_opengl");
+            if (processes.Length == 0)
+            {
+                Process.Start("../../../../../MalletOpenGLRenderer/build/mallet_by_opengl.exe");
+            }
+
+            List<byte[]> bytes = new ()
+            {
+                BitConverter.GetBytes(MalletParameters.HeadWidth),
+                BitConverter.GetBytes(MalletParameters.HeadHeight),
+                BitConverter.GetBytes(MalletParameters.HeadLength),
+                BitConverter.GetBytes(MalletParameters.HandleHeight),
+                BitConverter.GetBytes(MalletParameters.HandleDiameter)
+            };
+
+            using var file = File.Create("mallet_parameters");
+            foreach (var parameter in bytes)
+            {
+                file.Write(parameter);
+            }
+        }
+
+        /// <summary>
         /// Команда для построения модели киянки в компасе.
         /// </summary>
         [RelayCommand(CanExecute = nameof(CanBuild))]
-        private void Build()
+        private void BuildCompass()
         {
             MalletBuilder.Build(CompassWrapper, MalletParameters);
         }
 
         /// <summary>
         /// Метод вызывается после изменения какого-либо параметра киянки и отвечается за
-        /// выключение кнопки <see cref="Build"/> для построения модели.
+        /// выключение кнопки <see cref="BuildCompass"/> для построения модели.
         /// </summary>
         /// <returns>Если параметры модели заданны правильно вернёт true, иначе false.</returns>
         private bool CanBuild()
