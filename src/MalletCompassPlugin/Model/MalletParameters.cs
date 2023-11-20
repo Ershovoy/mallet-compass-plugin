@@ -1,4 +1,4 @@
-﻿namespace Model
+namespace Model
 {
     /// <summary>
     /// Содержит парамеры для модели киянки.
@@ -142,14 +142,15 @@
             get => _headLength;
             set
             {
-                if (Validator.IsValueInRange(value, MinHeadLength, MaxHeadLength))
+                if (Validator.IsValueInRange(value, MinHeadLength, MaxHeadLength)
+                    && Validator.IsValueInRange(value, HeadWidth, MaxHeadLength))
                 {
                     _headLength = value;
                 }
                 else
                 {
                     throw new Exception(
-                        "Длина бойка должна быть задана в следующем диапазоне: [100 - 150]");
+                        $"Длина бойка должна быть задана в следующем диапазоне: [{HeadWidth} - 150]");
                 }
             }
         }
@@ -182,14 +183,15 @@
             get => _handleDiameter;
             set
             {
-                if (Validator.IsValueInRange(value, MinHandleDiameter, MaxHandleDiameter))
+                if (Validator.IsValueInRange(value, MinHandleDiameter, MaxHandleDiameter)
+                    && Validator.IsValueInRange(value, MinHandleDiameter, HeadWidth))
                 {
                     _handleDiameter = value;
                 }
                 else
                 {
                     throw new Exception(
-                        "Диаметр рукоятки должен быть задан в следующем диапазоне: [25 - 50]");
+                        $"Диаметр рукоятки должен быть задан в следующем диапазоне: [25 - {HeadWidth}]");
                 }
             }
         }
