@@ -13,9 +13,40 @@
         private const string CompassProgramID = "KOMPAS.Application.5";
 
         /// <summary>
+        /// Главный объект компаса.
+        /// </summary>
+        private KompasObject? _compass;
+
+        /// <summary>
         /// Конструктор.
         /// </summary>
-        public CompassWrapper()
+        public CompassWrapper() { }
+
+        /// <summary>
+        /// Главный объект компаса.
+        /// </summary>
+        public KompasObject Compass
+        {
+            get
+            {
+                if (_compass != null)
+                {
+                    return _compass;
+                }
+
+                _compass = ConnectToCompass();
+
+                return _compass;
+            }
+            set => _compass = value;
+        }
+
+        /// <summary>
+        /// Метод осуществляет подключение к api компаса.
+        /// </summary>
+        /// <returns>Главнеый объект компаса.</returns>
+        /// <exception cref="Exception">Не удалось подключиться к КОМПАС-3D.</exception>
+        private KompasObject ConnectToCompass()
         {
             KompasObject? compass = null;
             try
@@ -34,20 +65,14 @@
 
                     if (compass == null)
                     {
-                        // IApplication compassApp = compass.ksGetApplication7() as IApplication;
+                        throw new Exception("Не удалось подключиться к КОМПАС-3D");
                     }
 
                     compass.Visible = true;
                 }
             }
 
-            compass.ActivateControllerAPI();
-            Compass = compass;
+            return compass;
         }
-
-        /// <summary>
-        /// Главный объект компаса.
-        /// </summary>
-        public KompasObject Compass { get; set; }
     }
 }
