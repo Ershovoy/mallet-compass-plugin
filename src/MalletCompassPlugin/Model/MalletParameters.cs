@@ -1,7 +1,7 @@
 namespace Model
 {
     /// <summary>
-    /// Содержит парамеры для модели киянки.
+    /// Содержит параметры для модели киянки.
     /// </summary>
     public class MalletParameters
     {
@@ -26,14 +26,14 @@ namespace Model
         public const double MaxHeadHeight = 100.0;
 
         /// <summary>
-        /// Минммальная длина бойка.
+        /// Минимальная длина бойка.
         /// </summary>
-        public const double MinHeadLength = 100.0;
+        public const double MinHeadLength = 50.0;
 
         /// <summary>
         /// Максимальная длина бойка.
         /// </summary>
-        public const double MaxHeadLength = 150.0;
+        public const double MaxHeadLength = 200.0;
 
         /// <summary>
         /// Минимальная высота рукоятки.
@@ -41,29 +41,29 @@ namespace Model
         public const double MinHandleHeight = 100.0;
 
         /// <summary>
-        /// Максимальная высота руятки.
+        /// Максимальная высота рукоятки.
         /// </summary>
         public const double MaxHandleHeight = 250.0;
 
         /// <summary>
-        /// Минимальный диаметер рукоятки.
+        /// Минимальный диаметр рукоятки.
         /// </summary>
         public const double MinHandleDiameter = 25.0;
 
         /// <summary>
-        /// Максимальный диаметер рукоятки.
+        /// Максимальный диаметр рукоятки.
         /// </summary>
-        public const double MaxHandleDiameter = 50.0;
+        public const double MaxHandleDiameter = 100.0;
 
         /// <summary>
         /// Ширина бойка.
         /// </summary>
-        public double _headWidth;
+        private double _headWidth;
 
         /// <summary>
         /// Высота бойка.
         /// </summary>
-        private double _headHeigt;
+        private double _headHeight;
 
         /// <summary>
         /// Длина бойка.
@@ -109,27 +109,27 @@ namespace Model
                 else
                 {
                     throw new Exception(
-                        "Ширина бойка должна быть задана в следующем диапазоне: [50 - 100]");
+                        $"Ширина бойка должна быть задана в следующем диапазоне: [{MinHeadWidth} - {MaxHeadWidth}]");
                 }
             }
         }
 
         /// <summary>
-        /// Свойство для <see cref="_headHeigt"/>.
+        /// Свойство для <see cref="_headHeight"/>.
         /// </summary>
         public double HeadHeight
         {
-            get => _headHeigt;
+            get => _headHeight;
             set
             {
                 if (Validator.IsValueInRange(value, MinHeadHeight, MaxHeadHeight))
                 {
-                    _headHeigt = value;
+                    _headHeight = value;
                 }
                 else
                 {
                     throw new Exception(
-                        "Высота бойка должна быть задана в следующем диапазоне: [50 - 100]");
+                        $"Высота бойка должна быть задана в следующем диапазоне: [{MinHeadHeight} - {MaxHeadHeight}]");
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace Model
                 else
                 {
                     throw new Exception(
-                        $"Длина бойка должна быть задана в следующем диапазоне: [{HeadWidth} - 150]");
+                        $"Длина бойка должна быть задана в следующем диапазоне: [{HeadWidth} - {MaxHeadLength}]");
                 }
             }
         }
@@ -170,7 +170,7 @@ namespace Model
                 else
                 {
                     throw new Exception(
-                        "Высота рукоятки должен быть задана в следующем диапазоне: [100 - 250]");
+                        $"Высота рукоятки должен быть задана в следующем диапазоне: [{MinHandleHeight} - {MaxHandleHeight}]");
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace Model
                 else
                 {
                     throw new Exception(
-                        $"Диаметр рукоятки должен быть задан в следующем диапазоне: [25 - {HeadWidth}]");
+                        $"Диаметр рукоятки должен быть задан в следующем диапазоне: [{MinHandleDiameter} - {HeadWidth}]");
                 }
             }
         }

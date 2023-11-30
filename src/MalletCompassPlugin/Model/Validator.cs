@@ -9,7 +9,7 @@
         /// Проверяет входит ли значение в заданный диапазон.
         /// </summary>
         /// <param name="value">Значение для проверки.</param>
-        /// <param name="min">Миниммум.</param>
+        /// <param name="min">Минимум.</param>
         /// <param name="max">Максимум.</param>
         /// <returns>Возвращает true если значение входит в диапазон, иначе false.</returns>
         public static bool IsValueInRange(double value, double min, double max)

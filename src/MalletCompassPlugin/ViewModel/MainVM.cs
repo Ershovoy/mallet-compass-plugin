@@ -9,7 +9,7 @@ namespace ViewModel
     using CommunityToolkit.Mvvm.Input;
     using CompassWrapper;
     using Model;
-    using ViewModel.AttibuteValidators;
+    using ViewModel.AttributeValidators;
 
     /// <summary>
     /// Основная модель представления, связанная с <see cref="MalletParameters"/>.
@@ -55,12 +55,12 @@ namespace ViewModel
         [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
         [NotifyDataErrorInfo]
         [Range(
-            100.0,
-            150.0,
-            ErrorMessage = "Длина бойка должна быть задана в следующем диапазоне: [100 - 150]")]
+            50.0,
+            200.0,
+            ErrorMessage = "Длина бойка должна быть задана в следующем диапазоне: [50 - 200]")]
         [GreaterThan(
             nameof(HeadWidth),
-            ErrorMessage = "Длина бойка должена быть больше его ширины")]
+            ErrorMessage = "Длина бойка должна быть больше его ширины")]
         [Required]
         private double _headLength;
 
@@ -75,7 +75,7 @@ namespace ViewModel
             100.0,
             250.0,
             ErrorMessage =
-                "Высота рукоятки должнен быть задана в следующем диапазоне: [100 - 250]")]
+                "Высота рукоятки должен быть задана в следующем диапазоне: [100 - 250]")]
         [Required]
         private double _handleHeight;
 
@@ -88,8 +88,8 @@ namespace ViewModel
         [NotifyDataErrorInfo]
         [Range(
             25.0,
-            50.0,
-            ErrorMessage = "Диаметр рукоятки должнен быть задан в следующем диапазоне: [25 - 50]")]
+            100.0,
+            ErrorMessage = "Диаметр рукоятки должен быть задан в следующем диапазоне: [25 - 100]")]
         [Required]
         private double _handleDiameter;
 
@@ -127,7 +127,7 @@ namespace ViewModel
             ValidateProperty(HandleDiameter, nameof(HandleDiameter));
             if (!HasErrors)
             {
-                MalletParameters._headWidth = value;
+                MalletParameters.HeadWidth = value;
             }
         }
 
@@ -181,7 +181,7 @@ namespace ViewModel
         }
 
         /// <summary>
-        /// Команда для сохранения параметров киянки в файл.
+        /// Команда для построения модели киянки используя OpenGL и сохранения её параметров в файл.
         /// </summary>
         [RelayCommand(CanExecute = nameof(CanBuild))]
         private void BuildOpenGL()
@@ -218,7 +218,7 @@ namespace ViewModel
         }
 
         /// <summary>
-        /// Метод вызывается после изменения какого-либо параметра киянки и отвечается за
+        /// Метод вызывается после изменения какого-либо параметра киянки и отвечает за
         /// выключение кнопки <see cref="BuildCompass"/> для построения модели.
         /// </summary>
         /// <returns>Если параметры модели заданны правильно вернёт true, иначе false.</returns>

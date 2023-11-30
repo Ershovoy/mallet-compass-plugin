@@ -10,7 +10,7 @@
     public static class MyMarshal
     {
         /// <summary>
-        /// Получить обработчик программы по её айти.
+        /// Получить обработчик программы по её айди.
         /// </summary>
         /// <param name="progID">Айди программы.</param>
         /// <returns>Обработчик программы.</returns>

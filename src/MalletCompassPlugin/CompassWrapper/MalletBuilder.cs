@@ -55,7 +55,7 @@
         /// <param name="x">Начальная координата прямоугольника по x.</param>
         /// <param name="y">Начальная координата прямоугольника по y.</param>
         /// <param name="width">Ширина прямоугольника.</param>
-        /// <param name="height">Высота прямогольника.</param>
+        /// <param name="height">Высота прямоугольника.</param>
         private static void DrawRectangle(
             ksDocument2D document2d,
             double x,
@@ -87,7 +87,7 @@
         }
 
         /// <summary>
-        /// Создаёт выдавливаение на заданном наброске.
+        /// Создаёт выдавливание на заданном наброске.
         /// </summary>
         /// <param name="part">Деталь.</param>
         /// <param name="sketch">Набросок.</param>

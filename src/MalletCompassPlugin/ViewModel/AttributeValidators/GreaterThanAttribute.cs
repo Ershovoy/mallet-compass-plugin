@@ -1,4 +1,4 @@
-﻿namespace ViewModel.AttibuteValidators
+﻿namespace ViewModel.AttributeValidators
 {
     using System;
     using System.ComponentModel.DataAnnotations;
