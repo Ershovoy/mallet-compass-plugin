@@ -132,7 +132,7 @@ namespace ViewModel
         /// <param name="value">Новое значение для ширины бойка.</param>
         partial void OnHeadWidthChanged(double value)
         {
-            ValidateProperty(HandleDiameter, nameof(HandleDiameter));
+            ValidateProperty(HeadLength, nameof(HeadLength));
             if (!HasErrors)
             {
                 MalletParameters.HeadWidth = value;

@@ -1,5 +1,6 @@
 ﻿namespace CompassWrapper
 {
+    using System.Runtime.InteropServices;
     using Kompas6API5;
 
     /// <summary>
@@ -27,17 +28,7 @@
         /// </summary>
         public KompasObject Compass
         {
-            get
-            {
-                if (_compass != null)
-                {
-                    return _compass;
-                }
-
-                _compass = ConnectToCompass();
-
-                return _compass;
-            }
+            get => ConnectToCompass();
             set => _compass = value;
         }
 

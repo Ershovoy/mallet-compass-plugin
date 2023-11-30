@@ -13,6 +13,7 @@
     MinHeight="300"
     d:DataContext="{d:DesignInstance Type=vm:MainVM}"
     Icon="Images/icon.ico"
+    ResizeMode="CanMinimize"
     mc:Ignorable="d">
 
     <Window.DataContext>
