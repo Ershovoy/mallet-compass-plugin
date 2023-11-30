@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MalletCompassPlugin"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
     Title="Построитель киянки"
@@ -49,48 +50,53 @@
 
 
                 <Label Grid.Row="0" Grid.Column="0">Ширина бойка (W)</Label>
-                <TextBox
+                <local:NumericTextBox
                     Grid.Row="0"
                     Grid.Column="1"
                     Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
                     Text="{Binding HeadWidth, UpdateSourceTrigger=PropertyChanged}">
-                </TextBox>
+                </local:NumericTextBox>
                 <Label Grid.Row="0" Grid.Column="2">мм</Label>
 
                 <Label Grid.Row="1" Grid.Column="0">Высота бойка (H)</Label>
-                <TextBox
+                <local:NumericTextBox
                     Grid.Row="1"
                     Grid.Column="1"
                     Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
                     Text="{Binding HeadHeight, UpdateSourceTrigger=PropertyChanged}">
-                </TextBox>
+                </local:NumericTextBox>
                 <Label Grid.Row="1" Grid.Column="2">мм</Label>
 
                 <Label Grid.Row="2" Grid.Column="0">Длина бойка (L)</Label>
-                <TextBox
+                <local:NumericTextBox
                     Grid.Row="2"
                     Grid.Column="1"
                     Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
                     Text="{Binding HeadLength, UpdateSourceTrigger=PropertyChanged}">
-                </TextBox>
+                </local:NumericTextBox>
                 <Label Grid.Row="2" Grid.Column="2">мм</Label>
 
                 <Label Grid.Row="3" Grid.Column="0">Высота рукоятки (h1)</Label>
-                <TextBox
+                <local:NumericTextBox
                     Grid.Row="3"
                     Grid.Column="1"
                     Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
                     Text="{Binding HandleHeight, UpdateSourceTrigger=PropertyChanged}">
-                </TextBox>
+                </local:NumericTextBox>
                 <Label Grid.Row="3" Grid.Column="2">мм</Label>
 
                 <Label Grid.Row="4" Grid.Column="0">Диаметр рукоятки (D)</Label>
-                <TextBox
+                <local:NumericTextBox
                     Grid.Row="4"
                     Grid.Column="1"
                     Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
                     Text="{Binding HandleDiameter, UpdateSourceTrigger=PropertyChanged}">
-                </TextBox>
+                </local:NumericTextBox>
                 <Label Grid.Row="4" Grid.Column="2">мм</Label>
 
                 <StackPanel

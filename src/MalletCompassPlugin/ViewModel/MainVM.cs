@@ -17,6 +17,14 @@ namespace ViewModel
     public partial class MainVM : ObservableValidator
     {
         /// <summary>
+        /// Через это поле View сообщает, что одно из полей содержит недопустимые для ввода символы.
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
+        private bool _hasInvalidInput;
+
+        /// <summary>
         /// Ширина бойка.
         /// </summary>
         [ObservableProperty]
@@ -224,7 +232,7 @@ namespace ViewModel
         /// <returns>Если параметры модели заданны правильно вернёт true, иначе false.</returns>
         private bool CanBuild()
         {
-            return !HasErrors;
+            return !HasErrors && !HasInvalidInput;
         }
     }
 }

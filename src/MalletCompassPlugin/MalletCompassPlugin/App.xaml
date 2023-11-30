@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:MalletCompassPlugin"
     StartupUri="MainWindow.xaml">
-    
+
     <Application.Resources>
         <SolidColorBrush x:Key="ValidationErrorBrush" Color="#3FFF0000"/>
 
@@ -26,6 +26,10 @@
                     </Setter.Value>
                 </Setter>
             </Style.Setters>
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type local:NumericTextBox}">
+
         </Style>
     </Application.Resources>
 </Application>
