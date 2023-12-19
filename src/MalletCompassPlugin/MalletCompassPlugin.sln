@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompassWrapper", "CompassWr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{B91AE8F7-87BF-4ACB-A391-963BA65E598B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model.UnitTests", "Testing\Model.UnitTests\Model.UnitTests.csproj", "{B51F6845-D7D5-4F37-B84E-E94A0E7F6FF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.UnitTests", "Testing\Model.UnitTests\Model.UnitTests.csproj", "{B51F6845-D7D5-4F37-B84E-E94A0E7F6FF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTesting", "Testing\StressTesting\StressTesting.csproj", "{F7391D14-3BFD-4D10-8DA3-40B894486018}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +43,17 @@ Global
 		{B51F6845-D7D5-4F37-B84E-E94A0E7F6FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B51F6845-D7D5-4F37-B84E-E94A0E7F6FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B51F6845-D7D5-4F37-B84E-E94A0E7F6FF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7391D14-3BFD-4D10-8DA3-40B894486018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7391D14-3BFD-4D10-8DA3-40B894486018}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7391D14-3BFD-4D10-8DA3-40B894486018}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7391D14-3BFD-4D10-8DA3-40B894486018}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B51F6845-D7D5-4F37-B84E-E94A0E7F6FF8} = {B91AE8F7-87BF-4ACB-A391-963BA65E598B}
+		{F7391D14-3BFD-4D10-8DA3-40B894486018} = {B91AE8F7-87BF-4ACB-A391-963BA65E598B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4DFB9CF9-E0D1-444E-928F-6C306FEAEDEE}
