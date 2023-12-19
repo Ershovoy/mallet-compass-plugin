@@ -21,6 +21,43 @@
             }
         }
 
+        [Test(Description = "Позитивный тест на возвращение корректной формы бойка")]
+        public void TestHeadType_Get_CorrectValue()
+        {
+            // Setup.
+            _malletParameters.HeadType = HeadType.Cylinder;
+            var expected = HeadType.Cylinder;
+
+            // Act.
+            var actual = _malletParameters.HeadType;
+
+            // Assert.
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test(Description = "Позитивный тест на возвращение корректного диаметра бойка")]
+        public void TestHeadDiameter_Get_CorrectValue()
+        {
+            // Setup.
+            _malletParameters.HeadDiameter = 65;
+            double expected = 65;
+
+            // Act.
+            var actual = _malletParameters.HeadDiameter;
+
+            // Assert.
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test(
+            Description =
+                "Негативный тест на присвоение некорректного диаметра бойка, ожидается выброс исключения")]
+        public void TestHeadDiameter_SetIncorrectValue_ThrowException()
+        {
+            // Assert.
+            Assert.Throws<Exception>(() => _malletParameters.HeadDiameter = 500);
+        }
+
         [Test(Description = "Позитивный тест на возвращение корректной ширины бойка")]
         public void TestHeadWidth_Get_CorrectValue()
         {
@@ -138,16 +175,16 @@
 
         [Test(
             Description =
-                "Негативный тест заданный диаметр рукоятки должен быть меньше её ширины, ожидается выброс исключения")]
-        public void TestHandleDiameter_GreaterThanHandleWidth_ThrowException()
+                "Негативный тест ширина бойка должна быть больше диаметра рукоятки, ожидается выброс исключения")]
+        public void TestHeadWidth_LessThanHandleDiameter_ThrowException()
         {
             // Setup.
-            _malletParameters.HeadWidth = 50;
+            _malletParameters.HandleDiameter = 70;
 
             // Assert.
             Assert.Throws<Exception>(
-                () => _malletParameters.HandleDiameter = 60,
-                "К диаметру рукоятки было присвоено значение большее ширины его бойка");
+                () => _malletParameters.HeadWidth = 60,
+                "К ширине бойка было присвоено значение меньше диаметра рукоятки.");
         }
 
         [Test(

@@ -9,8 +9,6 @@
     Title="Построитель киянки"
     Width="800"
     Height="450"
-    MinWidth="400"
-    MinHeight="300"
     d:DataContext="{d:DesignInstance Type=vm:MainVM}"
     Icon="Images/icon.ico"
     ResizeMode="CanMinimize"
@@ -41,6 +39,8 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -49,59 +49,82 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-
-                <Label Grid.Row="0" Grid.Column="0">Ширина бойка (W)</Label>
-                <local:NumericTextBox
+                <Label Grid.Row="0" Grid.Column="0">Форма бойка</Label>
+                <ComboBox
+                    Name="HeadTypeComboBox"
                     Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="2"
+                    SelectedValue="{Binding HeadType}"
+                    SelectionChanged="HeadTypeComboBox_SelectionChanged">
+                </ComboBox>
+
+                <Label Grid.Row="1" Grid.Column="0">Диаметр бойка (D)</Label>
+                <local:NumericTextBox
+                    x:Name="HeadDiameterTextBox"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HeadDiameter, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="1" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="2" Grid.Column="0">Ширина бойка (W)</Label>
+                <local:NumericTextBox
+                    x:Name="HeadWidthTextBox"
+                    Grid.Row="2"
                     Grid.Column="1"
                     Margin="2"
                     HasTextInputError="{Binding HasInvalidInput}"
                     Text="{Binding HeadWidth, UpdateSourceTrigger=PropertyChanged}">
                 </local:NumericTextBox>
-                <Label Grid.Row="0" Grid.Column="2">мм</Label>
+                <Label Grid.Row="2" Grid.Column="2">мм</Label>
 
-                <Label Grid.Row="1" Grid.Column="0">Высота бойка (H)</Label>
+                <Label Grid.Row="3" Grid.Column="0">Высота бойка (H)</Label>
                 <local:NumericTextBox
-                    Grid.Row="1"
+                    x:Name="HeadHeightTextBox"
+                    Grid.Row="3"
                     Grid.Column="1"
                     Margin="2"
                     HasTextInputError="{Binding HasInvalidInput}"
                     Text="{Binding HeadHeight, UpdateSourceTrigger=PropertyChanged}">
                 </local:NumericTextBox>
-                <Label Grid.Row="1" Grid.Column="2">мм</Label>
-
-                <Label Grid.Row="2" Grid.Column="0">Длина бойка (L)</Label>
-                <local:NumericTextBox
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Margin="2"
-                    HasTextInputError="{Binding HasInvalidInput}"
-                    Text="{Binding HeadLength, UpdateSourceTrigger=PropertyChanged}">
-                </local:NumericTextBox>
-                <Label Grid.Row="2" Grid.Column="2">мм</Label>
-
-                <Label Grid.Row="3" Grid.Column="0">Высота рукоятки (h1)</Label>
-                <local:NumericTextBox
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Margin="2"
-                    HasTextInputError="{Binding HasInvalidInput}"
-                    Text="{Binding HandleHeight, UpdateSourceTrigger=PropertyChanged}">
-                </local:NumericTextBox>
                 <Label Grid.Row="3" Grid.Column="2">мм</Label>
 
-                <Label Grid.Row="4" Grid.Column="0">Диаметр рукоятки (D)</Label>
+                <Label Grid.Row="4" Grid.Column="0">Длина бойка (L)</Label>
                 <local:NumericTextBox
                     Grid.Row="4"
                     Grid.Column="1"
                     Margin="2"
                     HasTextInputError="{Binding HasInvalidInput}"
-                    Text="{Binding HandleDiameter, UpdateSourceTrigger=PropertyChanged}">
+                    Text="{Binding HeadLength, UpdateSourceTrigger=PropertyChanged}">
                 </local:NumericTextBox>
                 <Label Grid.Row="4" Grid.Column="2">мм</Label>
 
-                <StackPanel
+                <Label Grid.Row="5" Grid.Column="0">Высота рукоятки (h1)</Label>
+                <local:NumericTextBox
                     Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HandleHeight, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="5" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="6" Grid.Column="0">Диаметр рукоятки (D)</Label>
+                <local:NumericTextBox
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HandleDiameter, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="6" Grid.Column="2">мм</Label>
+
+                <StackPanel
+                    Grid.Row="7"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     VerticalAlignment="Bottom">

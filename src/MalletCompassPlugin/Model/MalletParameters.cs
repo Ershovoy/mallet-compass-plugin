@@ -6,22 +6,62 @@ namespace Model
     public class MalletParameters
     {
         /// <summary>
-        /// Минимальная ширина бойка.
+        /// Диаметр цилиндрической формы бойка.
+        /// </summary>
+        private double _headDiameter;
+
+        /// <summary>
+        /// Ширина прямоугольной формы бойка.
+        /// </summary>
+        private double _headWidth;
+
+        /// <summary>
+        /// Высота прямоугольной формы бойка.
+        /// </summary>
+        private double _headHeight;
+
+        /// <summary>
+        /// Длина бойка.
+        /// </summary>
+        private double _headLength;
+
+        /// <summary>
+        /// Высота рукоятки.
+        /// </summary>
+        private double _handleHeight;
+
+        /// <summary>
+        /// Диаметр рукоятки.
+        /// </summary>
+        private double _handleDiameter;
+
+        /// <summary>
+        /// Минимальный диаметр цилиндрической формы бойка.
+        /// </summary>
+        public const double MinHeadDiameter = 50.0;
+
+        /// <summary>
+        /// Максимальный диаметр цилиндрической формы бойка.
+        /// </summary>
+        public const double MaxHeadDiameter = 100.0;
+
+        /// <summary>
+        /// Минимальная ширина прямоугольной формы бойка.
         /// </summary>
         public const double MinHeadWidth = 50.0;
 
         /// <summary>
-        /// Максимальная ширина бойка.
+        /// Максимальная ширина прямоугольной формы  бойка.
         /// </summary>
         public const double MaxHeadWidth = 100.0;
 
         /// <summary>
-        /// Минимальная высота бойка.
+        /// Минимальная высота прямоугольной формы бойка.
         /// </summary>
         public const double MinHeadHeight = 50.0;
 
         /// <summary>
-        /// Максимальная высота бойка.
+        /// Максимальная высота прямоугольной формы бойка.
         /// </summary>
         public const double MaxHeadHeight = 100.0;
 
@@ -56,42 +96,48 @@ namespace Model
         public const double MaxHandleDiameter = 100.0;
 
         /// <summary>
-        /// Ширина бойка.
-        /// </summary>
-        private double _headWidth;
-
-        /// <summary>
-        /// Высота бойка.
-        /// </summary>
-        private double _headHeight;
-
-        /// <summary>
-        /// Длина бойка.
-        /// </summary>
-        private double _headLength;
-
-        /// <summary>
-        /// Высота рукоятки.
-        /// </summary>
-        private double _handleHeight;
-
-        /// <summary>
-        /// Диаметр рукоятки.
-        /// </summary>
-        private double _handleDiameter;
-
-        /// <summary>
         /// Конструктор.
         /// </summary>
         public MalletParameters()
         {
             var random = new Random();
-            HeadWidth = random.Next((int)MinHeadWidth, (int)MaxHeadWidth);
+            HeadType = HeadType.Rectangle;
+            HeadDiameter = random.Next((int)MinHeadDiameter, (int)MaxHeadDiameter);
+            HeadWidth = HeadDiameter;
             HeadHeight = random.Next((int)MinHeadHeight, (int)MaxHeadHeight);
-            var minHeadLength = HeadWidth < MinHeadLength ? MinHeadLength : HeadWidth;
+            var minHeadLength = HeadWidth < MinHeadLength ? MinHeadLength : HeadWidth + 25;
             HeadLength = random.Next((int)minHeadLength, (int)MaxHeadLength);
+            var maxHandleDiameter = HeadWidth < MaxHandleDiameter ? HeadWidth : MaxHandleDiameter;
+            HandleDiameter = random.Next((int)MinHandleDiameter, (int)maxHandleDiameter);
             HandleHeight = random.Next((int)MinHandleHeight, (int)MaxHandleHeight);
-            HandleDiameter = random.Next((int)MinHandleDiameter, (int)(HeadWidth / 2.0));
+        }
+
+        /// <summary>
+        /// Форма бойка.
+        /// </summary>
+        public HeadType HeadType { get; set; }
+
+        /// <summary>
+        /// Свойство для <see cref="_headDiameter"/>.
+        /// </summary>
+        public double HeadDiameter
+        {
+            get => _headDiameter;
+            set
+            {
+                var minHeadDiameter =
+                    HandleDiameter < MinHeadDiameter ? MinHeadDiameter : HandleDiameter;
+
+                if (Validator.IsValueInRange(value, minHeadDiameter, MaxHeadDiameter))
+                {
+                    _headDiameter = value;
+                }
+                else
+                {
+                    throw new Exception(
+                        $"Диаметр бойка должен быть задана в следующем диапазоне: [{minHeadDiameter} - {MaxHeadDiameter}]");
+                }
+            }
         }
 
         /// <summary>
@@ -102,14 +148,17 @@ namespace Model
             get => _headWidth;
             set
             {
-                if (Validator.IsValueInRange(value, MinHeadWidth, MaxHeadWidth))
+                var minHeadWidth =
+                    HandleDiameter < MinHeadWidth ? MinHeadWidth : HandleDiameter;
+
+                if (Validator.IsValueInRange(value, minHeadWidth, MaxHeadWidth))
                 {
                     _headWidth = value;
                 }
                 else
                 {
                     throw new Exception(
-                        $"Ширина бойка должна быть задана в следующем диапазоне: [{MinHeadWidth} - {MaxHeadWidth}]");
+                        $"Ширина бойка должна быть задана в следующем диапазоне: [{minHeadWidth} - {MaxHeadWidth}]");
                 }
             }
         }
@@ -142,15 +191,17 @@ namespace Model
             get => _headLength;
             set
             {
-                if (Validator.IsValueInRange(value, MinHeadLength, MaxHeadLength)
-                    && Validator.IsValueInRange(value, HeadWidth, MaxHeadLength))
+                var minHeadLength =
+                    HeadWidth < MinHeadLength ? MinHeadLength : HeadWidth;
+
+                if (Validator.IsValueInRange(value, minHeadLength, MaxHeadLength))
                 {
                     _headLength = value;
                 }
                 else
                 {
                     throw new Exception(
-                        $"Длина бойка должна быть задана в следующем диапазоне: [{HeadWidth} - {MaxHeadLength}]");
+                        $"Длина бойка должна быть задана в следующем диапазоне: [{minHeadLength} - {MaxHeadLength}]");
                 }
             }
         }
@@ -183,15 +234,14 @@ namespace Model
             get => _handleDiameter;
             set
             {
-                if (Validator.IsValueInRange(value, MinHandleDiameter, MaxHandleDiameter)
-                    && Validator.IsValueInRange(value, MinHandleDiameter, HeadWidth))
+                if (Validator.IsValueInRange(value, MinHandleDiameter, MaxHandleDiameter))
                 {
                     _handleDiameter = value;
                 }
                 else
                 {
                     throw new Exception(
-                        $"Диаметр рукоятки должен быть задан в следующем диапазоне: [{MinHandleDiameter} - {HeadWidth}]");
+                        $"Диаметр рукоятки должен быть задан в следующем диапазоне: [{MinHandleDiameter} - {MaxHandleDiameter}]");
                 }
             }
         }

@@ -25,7 +25,32 @@ namespace ViewModel
         private bool _hasInvalidInput;
 
         /// <summary>
-        /// Ширина бойка.
+        /// Форма бойка.
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
+        private HeadType _headType;
+
+        /// <summary>
+        /// Диаметр цилиндрической формы бойка.
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
+        [NotifyDataErrorInfo]
+        [Range(
+            50.0,
+            100.0,
+            ErrorMessage = "Диаметр бойка должна быть задан в следующем диапазоне: [50 - 100]")]
+        [GreaterThan(
+            nameof(HandleDiameter),
+            ErrorMessage = "Диаметр бойка должна быть больше диаметра его рукоятки")]
+        [Required]
+        private double _headDiameter;
+
+        /// <summary>
+        /// Ширина прямоугольной формы бойка.
         /// </summary>
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
@@ -42,7 +67,7 @@ namespace ViewModel
         private double _headWidth;
 
         /// <summary>
-        /// Высота бойка.
+        /// Высота прямоугольной формы бойка.
         /// </summary>
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
@@ -109,6 +134,8 @@ namespace ViewModel
             MalletParameters = new MalletParameters();
             CompassWrapper = new CompassWrapper();
 
+            HeadType = MalletParameters.HeadType;
+            HeadDiameter = MalletParameters.HeadDiameter;
             HeadWidth = MalletParameters.HeadWidth;
             HeadHeight = MalletParameters.HeadHeight;
             HeadLength = MalletParameters.HeadLength;
@@ -125,6 +152,50 @@ namespace ViewModel
         /// Параметры киянки.
         /// </summary>
         public MalletParameters MalletParameters { get; set; }
+
+        /// <summary>
+        /// Метод вызывается после изменения формы бойка.
+        /// </summary>
+        /// <param name="value">Новое значение для формы бойка.</param>
+        partial void OnHeadTypeChanged(HeadType value)
+        {
+            HasInvalidInput = false;
+            switch (value)
+            {
+                case HeadType.Rectangle:
+                {
+                    ClearErrors(nameof(HeadDiameter));
+                    ValidateProperty(HeadWidth, nameof(HeadWidth));
+                    ValidateProperty(HeadHeight, nameof(HeadHeight));
+
+                    break;
+                }
+
+                case HeadType.Cylinder:
+                {
+                    ClearErrors(nameof(HeadWidth));
+                    ClearErrors(nameof(HeadHeight));
+                    ValidateProperty(HeadDiameter, nameof(HeadDiameter));
+
+                    break;
+                }
+            }
+
+            MalletParameters.HeadType = value;
+        }
+
+        /// <summary>
+        /// Метод вызывается после изменения диаметра бойка.
+        /// </summary>
+        /// <param name="value">Новое значение для диаметра бойка.</param>
+        partial void OnHeadDiameterChanged(double value)
+        {
+            ValidateProperty(HeadLength, nameof(HeadLength));
+            if (!HasErrors)
+            {
+                MalletParameters.HeadDiameter = value;
+            }
+        }
 
         /// <summary>
         /// Метод вызывается после изменения ширины бойка.
