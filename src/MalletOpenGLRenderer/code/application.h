@@ -13,6 +13,8 @@ struct Mallet_parameters
     float64 heah_length;
     float64 handle_height;
     float64 handle_diameter;
+    float64 head_diameter;
+    int32 head_type;
 };
 
 struct Keyboard_state

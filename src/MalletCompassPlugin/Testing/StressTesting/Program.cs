@@ -5,21 +5,30 @@
     using Microsoft.VisualBasic.Devices;
     using Model;
 
+    /// <summary>
+    /// Класс для нагрузочного тестирования.
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Точка входа.
+        /// </summary>
+        /// <param name="args">Аргументы.</param>
         private static void Main(string[] args)
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            var malletParameters = new MalletParameters();
-            malletParameters.HeadLength = 125.0;
-            malletParameters.HeadWidth = 75.0;
-            malletParameters.HeadHeight = 75.0;
-            malletParameters.HandleHeight = 175.0;
-            malletParameters.HandleDiameter = 60.0;
+            var malletParameters = new MalletParameters(
+                HeadType.Rectangle,
+                0,
+                75,
+                75,
+                75,
+                125,
+                175,
+                50);
             var compassWrapper = new CompassWrapper();
             var streamWriter = new StreamWriter("log.txt", true);
-            var currentProcess = Process.GetCurrentProcess();
             var count = 0;
             while (true)
             {

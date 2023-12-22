@@ -6,6 +6,11 @@ namespace Model
     public class MalletParameters
     {
         /// <summary>
+        /// Радиус скругления цилиндрической формы бойка.
+        /// </summary>
+        private double _headChamferRadius;
+
+        /// <summary>
         /// Диаметр цилиндрической формы бойка.
         /// </summary>
         private double _headDiameter;
@@ -34,6 +39,16 @@ namespace Model
         /// Диаметр рукоятки.
         /// </summary>
         private double _handleDiameter;
+
+        /// <summary>
+        /// Минимальный радиус скругления у цилиндрической формы бойка.
+        /// </summary>
+        public const double MinHeadChamferRadius = 0.0;
+
+        /// <summary>
+        /// Максимальный радиус скругления у цилиндрической формы бойка.
+        /// </summary>
+        public const double MaxHeadChamferRadius = 10.0;
 
         /// <summary>
         /// Минимальный диаметр цилиндрической формы бойка.
@@ -68,7 +83,7 @@ namespace Model
         /// <summary>
         /// Минимальная длина бойка.
         /// </summary>
-        public const double MinHeadLength = 50.0;
+        public const double MinHeadLength = 75.0;
 
         /// <summary>
         /// Максимальная длина бойка.
@@ -93,7 +108,7 @@ namespace Model
         /// <summary>
         /// Максимальный диаметр рукоятки.
         /// </summary>
-        public const double MaxHandleDiameter = 100.0;
+        public const double MaxHandleDiameter = 75.0;
 
         /// <summary>
         /// Конструктор.
@@ -102,6 +117,7 @@ namespace Model
         {
             var random = new Random();
             HeadType = HeadType.Rectangle;
+            HeadChamferRadius = 0.0;
             HeadDiameter = random.Next((int)MinHeadDiameter, (int)MaxHeadDiameter);
             HeadWidth = HeadDiameter;
             HeadHeight = random.Next((int)MinHeadHeight, (int)MaxHeadHeight);
@@ -113,9 +129,60 @@ namespace Model
         }
 
         /// <summary>
+        /// Конструктор с всеми параметрами.
+        /// </summary>
+        /// <param name="headType">Форма бойка.</param>
+        /// <param name="headChamferRadius">Радиус скругления цилиндрической формы бойка.</param>
+        /// <param name="headDiameter">Диаметр цилиндрической формы бойка.</param>
+        /// <param name="headWidth">Ширина прямоугольной формы бойка.</param>
+        /// <param name="headHeight">Высота прямоугольной формы бойка.</param>
+        /// <param name="headLength">Длина бойка.</param>
+        /// <param name="handleHeight">Высота рукоятки.</param>
+        /// <param name="handleDiameter">Диаметр рукоятки.</param>
+        public MalletParameters(
+            HeadType headType,
+            double headChamferRadius,
+            double headDiameter,
+            double headWidth,
+            double headHeight,
+            double headLength,
+            double handleHeight,
+            double handleDiameter)
+        {
+            HeadType = headType;
+            _headChamferRadius = headChamferRadius;
+            _headDiameter = headDiameter;
+            _headWidth = headWidth;
+            _headHeight = headHeight;
+            _headLength = headLength;
+            _handleHeight = handleHeight;
+            _handleDiameter = handleDiameter;
+        }
+
+        /// <summary>
         /// Форма бойка.
         /// </summary>
         public HeadType HeadType { get; set; }
+
+        /// <summary>
+        /// Свойство для <see cref="_headChamferRadius"/>.
+        /// </summary>
+        public double HeadChamferRadius
+        {
+            get => _headChamferRadius;
+            set
+            {
+                if (Validator.IsValueInRange(value, MinHeadChamferRadius, MaxHeadChamferRadius))
+                {
+                    _headChamferRadius = value;
+                }
+                else
+                {
+                    throw new Exception(
+                        $"Радиус скругления цилиндрической бойка должен быть задана в следующем диапазоне: [{MinHeadChamferRadius} - {MaxHeadChamferRadius}]");
+                }
+            }
+        }
 
         /// <summary>
         /// Свойство для <see cref="_headDiameter"/>.
@@ -135,7 +202,7 @@ namespace Model
                 else
                 {
                     throw new Exception(
-                        $"Диаметр бойка должен быть задана в следующем диапазоне: [{minHeadDiameter} - {MaxHeadDiameter}]");
+                        $"Диаметр цилиндрической формы бойка должен быть задана в следующем диапазоне: [{minHeadDiameter} - {MaxHeadDiameter}]");
                 }
             }
         }
@@ -158,7 +225,7 @@ namespace Model
                 else
                 {
                     throw new Exception(
-                        $"Ширина бойка должна быть задана в следующем диапазоне: [{minHeadWidth} - {MaxHeadWidth}]");
+                        $"Ширина прямоугольной формы бойка должна быть задана в следующем диапазоне: [{minHeadWidth} - {MaxHeadWidth}]");
                 }
             }
         }
@@ -178,7 +245,7 @@ namespace Model
                 else
                 {
                     throw new Exception(
-                        $"Высота бойка должна быть задана в следующем диапазоне: [{MinHeadHeight} - {MaxHeadHeight}]");
+                        $"Высота прямоугольной формы бойка должна быть задана в следующем диапазоне: [{MinHeadHeight} - {MaxHeadHeight}]");
                 }
             }
         }

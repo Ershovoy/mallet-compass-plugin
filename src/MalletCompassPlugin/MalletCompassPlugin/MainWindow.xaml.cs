@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Controls;
     using Model;
 
     /// <summary>
@@ -28,13 +29,21 @@
         /// <param name="e">Аргументы.</param>
         private void HeadTypeComboBox_SelectionChanged(
             object sender,
-            System.Windows.Controls.SelectionChangedEventArgs e)
+            SelectionChangedEventArgs e)
         {
             var selectedHeadType = (HeadType?)e.AddedItems[0];
 
             HeadDiameterTextBox.IsEnabled = selectedHeadType == HeadType.Cylinder;
+            HeadChamferTextBox.IsEnabled = selectedHeadType == HeadType.Cylinder;
             HeadWidthTextBox.IsEnabled = selectedHeadType == HeadType.Rectangle;
             HeadHeightTextBox.IsEnabled = selectedHeadType == HeadType.Rectangle;
+
+            RectangleMalletImage.Visibility = selectedHeadType == HeadType.Cylinder
+                ? Visibility.Hidden
+                : Visibility.Visible;
+            CylinderMalletImage.Visibility = selectedHeadType == HeadType.Rectangle
+                ? Visibility.Hidden
+                : Visibility.Visible;
         }
     }
 }

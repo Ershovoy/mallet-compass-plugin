@@ -33,6 +33,21 @@ namespace ViewModel
         private HeadType _headType;
 
         /// <summary>
+        /// Радиус скругления цилиндрической формы бойка.
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(BuildCompassCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
+        [NotifyDataErrorInfo]
+        [Range(
+            0.0,
+            10.0,
+            ErrorMessage =
+                "Радиус скругления цилиндрической формы бойка должна быть задан в следующем диапазоне: [0 - 10]")]
+        [Required]
+        private double _headChamferRadius;
+
+        /// <summary>
         /// Диаметр цилиндрической формы бойка.
         /// </summary>
         [ObservableProperty]
@@ -45,7 +60,8 @@ namespace ViewModel
             ErrorMessage = "Диаметр бойка должна быть задан в следующем диапазоне: [50 - 100]")]
         [GreaterThan(
             nameof(HandleDiameter),
-            ErrorMessage = "Диаметр бойка должна быть больше диаметра его рукоятки")]
+            ErrorMessage =
+                "Диаметр цилиндрической формы бойка должна быть больше диаметра его рукоятки")]
         [Required]
         private double _headDiameter;
 
@@ -59,10 +75,14 @@ namespace ViewModel
         [Range(
             50.0,
             100.0,
-            ErrorMessage = "Ширина бойка должна быть задана в следующем диапазоне: [50 - 100]")]
+            ErrorMessage =
+                "Ширина прямоугольной формы бойка должна быть задана в следующем диапазоне: [50 - 100]")]
         [GreaterThan(
             nameof(HandleDiameter),
             ErrorMessage = "Ширина бойка должна быть больше диаметра его рукоятки")]
+        [LessThan(
+            nameof(HeadLength),
+            ErrorMessage = "Ширина бойка должна быть меньше его длины")]
         [Required]
         private double _headWidth;
 
@@ -76,7 +96,8 @@ namespace ViewModel
         [Range(
             50.0,
             100.0,
-            ErrorMessage = "Высота бойка должна быть задана в следующем диапазоне: [50 - 100]")]
+            ErrorMessage =
+                "Высота прямоугольной формы бойка должна быть задана в следующем диапазоне: [50 - 100]")]
         [Required]
         private double _headHeight;
 
@@ -88,12 +109,9 @@ namespace ViewModel
         [NotifyCanExecuteChangedFor(nameof(BuildOpenGLCommand))]
         [NotifyDataErrorInfo]
         [Range(
-            50.0,
+            75.0,
             200.0,
-            ErrorMessage = "Длина бойка должна быть задана в следующем диапазоне: [50 - 200]")]
-        [GreaterThan(
-            nameof(HeadWidth),
-            ErrorMessage = "Длина бойка должна быть больше его ширины")]
+            ErrorMessage = "Длина бойка должна быть задана в следующем диапазоне: [75 - 200]")]
         [Required]
         private double _headLength;
 
@@ -121,8 +139,8 @@ namespace ViewModel
         [NotifyDataErrorInfo]
         [Range(
             25.0,
-            100.0,
-            ErrorMessage = "Диаметр рукоятки должен быть задан в следующем диапазоне: [25 - 100]")]
+            75.0,
+            ErrorMessage = "Диаметр рукоятки должен быть задан в следующем диапазоне: [25 - 75]")]
         [Required]
         private double _handleDiameter;
 
@@ -134,13 +152,13 @@ namespace ViewModel
             MalletParameters = new MalletParameters();
             CompassWrapper = new CompassWrapper();
 
-            HeadType = MalletParameters.HeadType;
-            HeadDiameter = MalletParameters.HeadDiameter;
-            HeadWidth = MalletParameters.HeadWidth;
-            HeadHeight = MalletParameters.HeadHeight;
-            HeadLength = MalletParameters.HeadLength;
-            HandleHeight = MalletParameters.HandleHeight;
-            HandleDiameter = MalletParameters.HandleDiameter;
+            _headType = MalletParameters.HeadType;
+            _headDiameter = MalletParameters.HeadDiameter;
+            _headWidth = MalletParameters.HeadWidth;
+            _headHeight = MalletParameters.HeadHeight;
+            _headLength = MalletParameters.HeadLength;
+            _handleHeight = MalletParameters.HandleHeight;
+            _handleDiameter = MalletParameters.HandleDiameter;
         }
 
         /// <summary>
@@ -167,6 +185,14 @@ namespace ViewModel
                     ClearErrors(nameof(HeadDiameter));
                     ValidateProperty(HeadWidth, nameof(HeadWidth));
                     ValidateProperty(HeadHeight, nameof(HeadHeight));
+                    ValidateProperty(HandleDiameter, nameof(HandleDiameter));
+
+                    if (!HasErrors)
+                    {
+                        MalletParameters.HeadWidth = HeadWidth;
+                        MalletParameters.HeadHeight = HeadHeight;
+                        MalletParameters.HandleDiameter = HandleDiameter;
+                    }
 
                     break;
                 }
@@ -176,6 +202,13 @@ namespace ViewModel
                     ClearErrors(nameof(HeadWidth));
                     ClearErrors(nameof(HeadHeight));
                     ValidateProperty(HeadDiameter, nameof(HeadDiameter));
+                    ValidateProperty(HandleDiameter, nameof(HandleDiameter));
+
+                    if (!HasErrors)
+                    {
+                        MalletParameters.HeadDiameter = HeadDiameter;
+                        MalletParameters.HandleDiameter = HandleDiameter;
+                    }
 
                     break;
                 }
@@ -185,33 +218,52 @@ namespace ViewModel
         }
 
         /// <summary>
-        /// Метод вызывается после изменения диаметра бойка.
+        /// Метод вызывается после изменения радиуса скругления у цилиндрической формы бойка.
+        /// </summary>
+        /// <param name="value">Новое значение для радиуса скругления.</param>
+        partial void OnHeadChamferRadiusChanged(double value)
+        {
+            if (!HasErrors)
+            {
+                MalletParameters.HeadChamferRadius = value;
+            }
+        }
+
+        /// <summary>
+        /// Метод вызывается после изменения диаметра цилиндрической формы бойка.
         /// </summary>
         /// <param name="value">Новое значение для диаметра бойка.</param>
         partial void OnHeadDiameterChanged(double value)
         {
-            ValidateProperty(HeadLength, nameof(HeadLength));
+            ValidateProperty(HandleDiameter, nameof(HandleDiameter));
+
             if (!HasErrors)
             {
+                MalletParameters.HandleDiameter = HandleDiameter;
+
                 MalletParameters.HeadDiameter = value;
             }
         }
 
         /// <summary>
-        /// Метод вызывается после изменения ширины бойка.
+        /// Метод вызывается после изменения ширины прямоугольной формы бойка.
         /// </summary>
         /// <param name="value">Новое значение для ширины бойка.</param>
         partial void OnHeadWidthChanged(double value)
         {
-            ValidateProperty(HeadLength, nameof(HeadLength));
+            ValidateProperty(HandleDiameter, nameof(HandleDiameter));
+
             if (!HasErrors)
             {
+                MalletParameters.HandleDiameter = HandleDiameter;
+                MalletParameters.HeadLength = HeadLength;
+
                 MalletParameters.HeadWidth = value;
             }
         }
 
         /// <summary>
-        /// Метод вызывается после изменения высоты бойка.
+        /// Метод вызывается после изменения высоты прямоугольной формы бойка.
         /// </summary>
         /// <param name="value">Новое значение для высоты бойка.</param>
         partial void OnHeadHeightChanged(double value)
@@ -228,8 +280,18 @@ namespace ViewModel
         /// <param name="value">Новое значение для длина бойка.</param>
         partial void OnHeadLengthChanged(double value)
         {
+            if (HeadType == HeadType.Rectangle)
+            {
+                ValidateProperty(HeadWidth, nameof(HeadWidth));
+            }
+
             if (!HasErrors)
             {
+                if (HeadType == HeadType.Rectangle)
+                {
+                    MalletParameters.HeadWidth = HeadWidth;
+                }
+
                 MalletParameters.HeadLength = value;
             }
         }
@@ -252,9 +314,26 @@ namespace ViewModel
         /// <param name="value">Новое значение для диаметра рукоятки.</param>
         partial void OnHandleDiameterChanged(double value)
         {
-            ValidateProperty(HeadWidth, nameof(HeadWidth));
+            if (HeadType == HeadType.Rectangle)
+            {
+                ValidateProperty(HeadWidth, nameof(HeadWidth));
+            }
+            else
+            {
+                ValidateProperty(HeadDiameter, nameof(HeadDiameter));
+            }
+
             if (!HasErrors)
             {
+                if (HeadType == HeadType.Rectangle)
+                {
+                    MalletParameters.HeadWidth = HeadWidth;
+                }
+                else
+                {
+                    MalletParameters.HeadDiameter = HeadDiameter;
+                }
+
                 MalletParameters.HandleDiameter = value;
             }
         }
@@ -277,7 +356,9 @@ namespace ViewModel
                 BitConverter.GetBytes(MalletParameters.HeadHeight),
                 BitConverter.GetBytes(MalletParameters.HeadLength),
                 BitConverter.GetBytes(MalletParameters.HandleHeight),
-                BitConverter.GetBytes(MalletParameters.HandleDiameter)
+                BitConverter.GetBytes(MalletParameters.HandleDiameter),
+                BitConverter.GetBytes(MalletParameters.HeadDiameter),
+                BitConverter.GetBytes((int)MalletParameters.HeadType)
             };
 
             using var file = File.Create("mallet_parameters");

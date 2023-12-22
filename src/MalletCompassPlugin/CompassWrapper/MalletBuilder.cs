@@ -31,7 +31,8 @@
                 malletParameters.HeadDiameter,
                 malletParameters.HeadWidth,
                 malletParameters.HeadHeight,
-                malletParameters.HeadLength);
+                malletParameters.HeadLength,
+                malletParameters.HeadChamferRadius);
 
             // Создаём модель рукоятки.
             BuildHandle(
@@ -56,7 +57,8 @@
             double headDiameter,
             double headWidth,
             double headHeight,
-            double headLength)
+            double headLength,
+            double headChamferRadius)
         {
             var headPart = document3d.GetPart((int)Part_Type.pTop_Part) as ksPart;
             var headPlane = headPart?.GetDefaultEntity((int)Obj3dType.o3d_planeYOZ) as ksEntity;
@@ -93,10 +95,10 @@
             MakeExtrusion(headPart, headSketch, headLength / 2);
             MakeExtrusion(headPart, headSketch, headLength / 2, false);
 
-            if (headType == HeadType.Cylinder)
+            if (headType == HeadType.Cylinder && headChamferRadius > 0.0)
             {
-                CreateChamfer(headPart, 10, headLength / 2, headWidth / 2, 0);
-                CreateChamfer(headPart, 10, -headLength / 2, headWidth / 2, 0);
+                CreateChamfer(headPart, headChamferRadius, headLength / 2, headDiameter / 2, 0);
+                CreateChamfer(headPart, headChamferRadius, -headLength / 2, headDiameter / 2, 0);
             }
         }
 
@@ -252,7 +254,8 @@
             chamferDefinition.tangent = true;
 
             var entityArray = chamferDefinition.array() as ksEntityCollection;
-            var entityCollection = part.EntityCollection((short)Obj3dType.o3d_edge) as ksEntityCollection;
+            var entityCollection =
+                part.EntityCollection((short)Obj3dType.o3d_edge) as ksEntityCollection;
             entityCollection?.SelectByPoint(x, y, z);
 
             var entityEdge = entityCollection?.Last();

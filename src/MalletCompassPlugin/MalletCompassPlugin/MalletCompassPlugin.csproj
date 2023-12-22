@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\cylinder_mallet.png" />
     <None Remove="Images\icon.ico" />
-    <None Remove="Images\mallet.png" />
+    <None Remove="Images\rectangle_mallet.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +26,8 @@
 
   <ItemGroup>
     <Resource Include="Images\icon.ico" />
-    <Resource Include="Images\mallet.png" />
+    <Resource Include="Images\rectangle_mallet.png" />
+    <Resource Include="Images\cylinder_mallet.png" />
   </ItemGroup>
 
 </Project>
