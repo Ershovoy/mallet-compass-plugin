@@ -1,0 +1,176 @@
+﻿<Window
+    x:Class="MalletCompassPlugin.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MalletCompassPlugin"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
+    Title="Построитель киянки"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance Type=vm:MainVM}"
+    Icon="Images/icon.ico"
+    ResizeMode="CanMinimize"
+    mc:Ignorable="d">
+
+    <Window.DataContext>
+        <vm:MainVM/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox
+            Margin="6"
+            Padding="6"
+            Header="Параметры киянки">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0">Форма бойка</Label>
+                <ComboBox
+                    Name="HeadTypeComboBox"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="2"
+                    SelectedValue="{Binding HeadType}"
+                    SelectionChanged="HeadTypeComboBox_SelectionChanged">
+                </ComboBox>
+
+                <Label Grid.Row="1" Grid.Column="0">Радиус скругления</Label>
+                <local:NumericTextBox
+                    x:Name="HeadChamferTextBox"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HeadChamferRadius, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="1" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="2" Grid.Column="0">Диаметр бойка (D)</Label>
+                <local:NumericTextBox
+                    x:Name="HeadDiameterTextBox"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HeadDiameter, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="2" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="3" Grid.Column="0">Ширина бойка (W)</Label>
+                <local:NumericTextBox
+                    x:Name="HeadWidthTextBox"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HeadWidth, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="3" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="4" Grid.Column="0">Высота бойка (H)</Label>
+                <local:NumericTextBox
+                    x:Name="HeadHeightTextBox"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HeadHeight, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="4" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="5" Grid.Column="0">Длина бойка (L)</Label>
+                <local:NumericTextBox
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HeadLength, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="5" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="6" Grid.Column="0">Высота рукоятки (h1)</Label>
+                <local:NumericTextBox
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HandleHeight, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="6" Grid.Column="2">мм</Label>
+
+                <Label Grid.Row="7" Grid.Column="0">Диаметр рукоятки (d1)</Label>
+                <local:NumericTextBox
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Margin="2"
+                    HasTextInputError="{Binding HasInvalidInput}"
+                    Text="{Binding HandleDiameter, UpdateSourceTrigger=PropertyChanged}">
+                </local:NumericTextBox>
+                <Label Grid.Row="7" Grid.Column="2">мм</Label>
+
+                <StackPanel
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    VerticalAlignment="Bottom">
+                    <Button
+                        Height="32"
+                        Margin="4"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding BuildOpenGLCommand}">
+                        Построить в OpenGL
+                    </Button>
+                    <Button
+                        Height="32"
+                        Margin="4"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding BuildCompassCommand}">
+                        Построить в КОМПАС-3D
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="6"
+            Padding="6 0 6 6"
+            Header="Чертёж киянки">
+            <Grid>
+                <Image Name="RectangleMalletImage" Source="/Images/rectangle_mallet.png"/>
+                <Image
+                    Name="CylinderMalletImage"
+                    Source="/Images/cylinder_mallet.png"
+                    Visibility="Hidden"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

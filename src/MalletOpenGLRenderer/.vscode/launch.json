@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "run",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/mallet_by_opengl.exe",
+            "cwd": "${workspaceFolder}/data"
+        }
+    ]
+}
